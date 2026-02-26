@@ -44,6 +44,26 @@ void PrintArray(int* array, int length)
 	std::cout << "\n";
 }
 
+void SelectionSort2(int* array, int length)
+{
+	for (int i = 0; i < length - 1; i++)
+	{
+		int minIndex = i;
+
+		for (int j = i; j < length; j++)
+		{
+			if (array[minIndex] > array[j])
+			{
+				minIndex = j;
+			}
+		}
+
+		if (minIndex != i)
+		{
+			std::swap<int>(array[minIndex], array[i]);
+		}
+	}
+}
 
 int main()
 {
@@ -56,7 +76,7 @@ int main()
 	std::cout << "정렬 전 출력: ";
 	PrintArray(array, length);
 
-	SelectionSort(array, length);
+	SelectionSort2(array, length);
 
 	std::cout << "정렬 후 출력: ";
 	PrintArray(array, length);

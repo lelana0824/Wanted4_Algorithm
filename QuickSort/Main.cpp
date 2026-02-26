@@ -4,7 +4,7 @@
 // 기준점-Pivot 선택 및 분할.
 int Partition(int* array, int left, int right)
 {
-	// 분할을 위한 변수.
+	// 분할을 위한 변수. 여기서는 배열의 첫 요소로 설정함.
 	int pivot = array[left];
 	int low = left + 1;
 	int high = right;

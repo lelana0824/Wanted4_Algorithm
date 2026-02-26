@@ -49,6 +49,21 @@ void PrintArray(int* array, int length)
 	std::cout << "\n";
 }
 
+
+void BubbleSort2(int* array, int length)
+{
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = 0; j < length - 1; j++)
+		{
+			if (array[j] > array[j + 1])
+			{
+				std::swap<int>(array[j], array[j + 1]);
+			}
+		}
+	}
+}
+
 int main()
 {
 	// 자료 집합.
@@ -59,7 +74,7 @@ int main()
 	std::cout << "정렬 전 배열: ";
 	PrintArray(array, length);
 
-	BubbleSort(array, length, IsLess);
+	BubbleSort2(array, length);
 
 	std::cout << "정렬 후 배열: ";
 	PrintArray(array, length);

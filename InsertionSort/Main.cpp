@@ -44,6 +44,22 @@ void PrintArray(int* array, int length)
 	std::cout << "\n";
 }
 
+void InsertionSort2(int* array, int length)
+{
+	for (int i = 1; i < length; i++)
+	{
+		int current = i - 1;
+		int key = array[i];
+
+		while (current >= 0 && key < array[current])
+		{
+			array[current + 1] = array[current];
+			--current;
+		}
+
+		array[current + 1] = key;
+	}
+}
 
 
 int main()
@@ -55,7 +71,7 @@ int main()
 	std::cout << "정렬 전 배열: ";
 	PrintArray(array, length);
 
-	InsertionSort(array, length);
+	InsertionSort2(array, length);
 
 	std::cout << "정렬 후 배열: ";
 	PrintArray(array, length);

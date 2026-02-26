@@ -57,22 +57,22 @@ void MergeSort(int* array, int length)
 
 	// 배열 나누기.
 	int mid = length / 2;
-
+	int rightArrayLength = length - mid;
 	// 나눠서 저장할 배열 선언 (공간 사용)
 	int* leftArray = new int[mid];
-	int* rightArray = new int[length - mid];
+	int* rightArray = new int[rightArrayLength];
 
 	// 배열 복사. memcpy 함수로 메모리 통 복사.
 	memcpy(leftArray, array, sizeof(array[0]) * mid);
-	memcpy(rightArray, array + mid, sizeof(array[0]) * (length - mid));
+	memcpy(rightArray, array + mid, sizeof(array[0]) * (rightArrayLength));
 
 	// 왼쪽 배열 병합 정렬 (재귀)
 	MergeSort(leftArray, mid);
 	// 오른쪽 배열 병합 정렬 (재귀)
-	MergeSort(rightArray, length - mid);
+	MergeSort(rightArray, rightArrayLength);
 
 	// 병합
-	Merge(array, leftArray, mid, rightArray, length - mid);
+	Merge(array, leftArray, mid, rightArray, rightArrayLength);
 
 	// 동적 메모리 해제.
 	delete[] leftArray;

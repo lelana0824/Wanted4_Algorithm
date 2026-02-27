@@ -94,6 +94,71 @@ void PrintArray(int* array, int length)
 	std::cout << "\n";
 }
 
+void Merge2(int* array,
+	int* leftArray, int leftArrayLength,
+	int* rightArray, int rightArrayLength)
+{
+	int index = 0;
+	int leftIndex = 0;
+	int rightIndex = 0;
+
+	while (leftIndex < leftArrayLength
+		&& rightIndex < rightArrayLength)
+	{
+		if (leftArray[leftIndex] < rightArray[rightIndex])
+		{
+			array[index] = leftArray[leftIndex++];
+		}
+		else
+		{
+			array[index] = rightArray[rightIndex++];
+		}
+		index++;
+	}
+
+
+	if (leftIndex < leftArrayLength)
+	{
+		for (int i = leftIndex; i < leftArrayLength; i++)
+		{
+			array[index++] = leftArray[i];
+		}
+	}
+
+	if (rightIndex < rightArrayLength)
+	{
+		for (int i = rightIndex; i < rightArrayLength; i++)
+		{
+			array[index++] = rightArray[i];
+		}
+	}
+}
+
+void MergeSort2(int* array, int length)
+{
+	if (length <= 1) return;
+
+	int mid = length / 2;
+	int leftArrayLength = mid;
+	int rightArrayLength = length - mid;
+
+	int* leftArray = new int[leftArrayLength];
+	int* rightArray = new int[rightArrayLength];
+
+	memcpy(leftArray, array, (leftArrayLength * sizeof(array[0])));
+	memcpy(rightArray, array + mid, (rightArrayLength * sizeof(array[0])));
+
+	MergeSort2(leftArray, leftArrayLength);
+	MergeSort2(rightArray, rightArrayLength);
+
+	Merge2(array,
+		leftArray, leftArrayLength,
+		rightArray, rightArrayLength
+	);
+
+	delete[] leftArray;
+	delete[] rightArray;
+}
 
 int main()
 {
@@ -117,7 +182,7 @@ int main()
 	std::cout << "정렬 전 배열: ";
 	PrintArray(array, length);
 
-	MergeSort(array, length);
+	MergeSort2(array, length);
 
 	std::cout << "정렬 후 배열: ";
 	PrintArray(array, length);

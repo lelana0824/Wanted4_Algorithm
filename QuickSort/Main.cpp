@@ -81,6 +81,47 @@ void PrintArray(int* array, int length)
 }
 
 
+int Partition2(int* array, int left, int right)
+{
+	int pivot = array[left];
+	int i = left + 1;
+	int j = right;
+
+	while (i < j)
+	{
+		while (array[i] < pivot)
+		{
+			i++;
+		}
+
+		while (array[j] > pivot)
+		{
+			j--;
+		}
+
+		if (i > j)
+		{
+			break;
+		}
+
+		std::swap<int>(array[i], array[j]);
+	}
+
+	std::swap<int>(array[left], array[j]);
+
+	return j;
+}
+
+void QuickSort2(int* array, int leftIndex, int rightIndex)
+{
+	if (leftIndex >= rightIndex) return;
+
+	int pivot = Partition2(array, leftIndex, rightIndex);
+
+	QuickSort2(array, leftIndex, pivot - 1);
+	QuickSort2(array, pivot + 1, rightIndex);
+}
+
 int main()
 {
 	// 자료 집합.
@@ -105,7 +146,7 @@ int main()
 	std::cout << "정렬 전:";
 	PrintArray(array, length);
 
-	QuickSort(array, 0, length - 1);
+	QuickSort2(array, 0, length - 1);
 
 	std::cout << "정렬 후:";
 	PrintArray(array, length);

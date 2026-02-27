@@ -69,6 +69,9 @@ void HeapSort(int* array, int length)
 		std::swap<int>(array[0], array[i]);
 
 		// 힙 구조를 유지하기 위해 루트 노드부터 다시 힙으로 만들기.
+		// 왜 작업중인 인덱스를 여기는 0을 넣어야 하지?
+		// 이미 0번 인덱스 이외의 요소들은 모두 힙정렬이 되어있기 때문에
+		// 한번 순회 (logn) 만 하면 된다고 한다.
 		Heapify(array, i, 0);
 	} 
 }
@@ -88,6 +91,56 @@ void PrintArray(int* array, int length)
 	std::cout << "\n";
 }
 
+void Heapify2(int* array, int length, int index)
+{
+	while (true)
+	{
+		int largest = index;
+		int leftChild = 2 * index + 1;
+		int rightChild = 2 * index + 2;
+		
+		if (leftChild < length && 
+			array[leftChild] > array[largest])
+		{
+			largest = leftChild;
+		}
+		if (rightChild < length && 
+			array[rightChild] > array[largest])
+		{
+			largest = rightChild;
+		}
+
+		if (largest == index)
+		{
+			break;
+		}
+
+		std::swap<int>(array[largest], array[index]);
+
+		index = largest;
+	}
+}
+
+void HeapSort2(int* array, int length)
+{
+
+	// 1/2n 시간 소요.
+	for (int i = length / 2 - 1; i >= 0; i--)
+	{
+		Heapify2(array, length, i);
+	}
+
+	// n시간 소요
+	for (int i = length - 1; i > 0; i--)
+	{
+		std::swap<int>(array[0], array[i]);
+
+		// 왜 작업중인 인덱스를 여기는 0을 넣어야 하지?
+		// 이미 0번 인덱스 이외의 요소들은 모두 힙정렬이 되어있기 때문에
+		// 한번 순회 (logn) 만 하면 된다고 한다.
+		Heapify2(array, i, 0);
+	}
+}
 
 int main()
 {
@@ -110,7 +163,7 @@ int main()
 	std::cout << "정렬 전 배열: ";
 	PrintArray(array, length);
 
-	HeapSort(array, length);
+	HeapSort2(array, length);
 
 	std::cout << "정렬 후 배열: ";
 	PrintArray(array, length);

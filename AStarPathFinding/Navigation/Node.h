@@ -41,5 +41,7 @@ public:
 
 	float hCost = 0.0f;
 
+	float fCost = 0.0f;
+
 	Node* parentNode = nullptr;
 };

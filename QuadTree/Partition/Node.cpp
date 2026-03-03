@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "QuadTree.h"
 
 Node::Node(const Bounds& bounds, int depth)
     : bounds(bounds), depth(depth)
@@ -64,6 +65,36 @@ void Node::Query(
 {
     // 현재 노드를 추가하고 이후 과정 진행.
     possibleNodes.emplace_back(this);
+
+    // 분할 여부 확인 후 자손 검사
+    if (!IsDivided())
+    {
+        return;
+    }
+
+    // 전달 받은 영역과 겹치는 4분면 목록 확인.
+    std::vector<NodeIndex> quads = GetQuads(bounds);
+
+    // 검사 진행
+    for (const NodeIndex& index : quads)
+    {
+        if (index == NodeIndex::TopLeft)
+        {
+            topLeft->Query(bounds, possibleNodes);
+        }
+        else if (index == NodeIndex::TopRight)
+        {
+            topRight->Query(bounds, possibleNodes);
+        }
+        else if (index == NodeIndex::BottomLeft)
+        {
+            bottomLeft->Query(bounds, possibleNodes);
+        }
+        else if (index == NodeIndex::BottomRight)
+        {
+            bottomRight->Query(bounds, possibleNodes);
+        }
+    }
 }
 
 void Node::Clear()
